@@ -1,0 +1,72 @@
+body {  
+    font-family: Arial, sans-serif;  
+    background-color: #f4f4f9;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    height: 100vh;  
+    margin: 0;  
+}  
+  
+.container {  
+    background-color: #fff;  
+    padding: 30px;  
+    border-radius: 8px;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+    width: 350px;  
+}  
+  
+h2 {  
+    text-align: center;  
+    margin-bottom: 20px;  
+    color: #333;  
+}  
+  
+.form-group {  
+    margin-bottom: 15px;  
+}  
+  
+label {  
+    display: block;  
+    margin-bottom: 5px;  
+    color: #555;  
+}  
+  
+input[type="text"],  
+input[type="email"],  
+input[type="password"],  
+select {  
+    width: 100%;  
+    padding: 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;  
+    box-sizing: border-box;  
+}  
+  
+button {  
+    width: 100%;  
+    padding: 10px;  
+    background-color: #007bff;  
+    color: #fff;  
+    border: none;  
+    border-radius: 4px;  
+    cursor: pointer;  
+    font-size: 16px;  
+}  
+  
+button:hover {  
+    background-color: #0056b3;  
+}  
+  
+select {  
+    appearance: none;  
+    -webkit-appearance: none;  
+    -moz-appearance: none;  
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#333" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');  
+    background-repeat: no-repeat;  
+    background-position: right 10px center;  
+    background-size: 10px 10px;  
+    padding-right: 30px;  
+}  
+
+

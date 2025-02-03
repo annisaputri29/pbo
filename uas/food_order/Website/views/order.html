@@ -1,0 +1,78 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Order Page</title>  
+    <!-- Bootstrap CSS -->  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">  
+</head>  
+<body>  
+    <header>  
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">  
+            <a class="navbar-brand" href="/">Home</a>  
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+                <span class="navbar-toggler-icon"></span>  
+            </button>  
+            <div class="collapse navbar-collapse" id="navbarNav">  
+                <ul class="navbar-nav ml-auto">  
+                    <li class="nav-item">  
+                        <a class="nav-link" href="track-order.html">Track Order</a>  
+                    </li>  
+                    <li class="nav-item">  
+                        <a class="nav-link" href="/auth/logout">Logout</a>  
+                    </li>  
+                </ul>  
+            </div>  
+        </nav>  
+    </header>  
+    <main class="container mt-5">  
+        <div class="row">  
+            <div class="col-md-6">  
+                <img src="{{ menu_item.image }}" class="img-fluid mb-4" alt="{{ menu_item.name }}">  
+            </div>  
+            <div class="col-md-6">  
+                <h1 class="display-4">{{ menu_item.name }}</h1>  
+                <p class="lead">{{ menu_item.description }}</p>  
+                <h3 class="text-muted">Rp{{ menu_item.price }}</h3>  
+                <form id="orderForm" action="/order/menu/{{ menu_item.item_id }}", method="POST">  
+                    <div class="form-group">  
+                        <label for="quantity">Quantity</label>  
+                        <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1">  
+                    </div>  
+                    <div class="form-group">  
+                        <label for="totalPrice">Total Price</label>  
+                        <input type="text" class="form-control" id="totalPrice" name="totalPrice" readonly>  
+                    </div>  
+                    <div class="form-group">  
+                        <label for="deliveryAddress">Delivery Address</label>  
+                        <textarea class="form-control" id="deliveryAddress" name="deliveryAddress" rows="2" required></textarea>  
+                    </div>  
+                    <button type="submit" class="btn btn-primary mb-3">Order</button>  
+                </form>  
+            </div>  
+        </div>  
+    </main>  
+    <!-- Bootstrap JS and dependencies -->  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+    <script>  
+        document.addEventListener('DOMContentLoaded', function() {  
+            const quantityInput = document.getElementById('quantity');  
+            const totalPriceInput = document.getElementById('totalPrice');  
+            const price = parseFloat('{{ menu_item.price }}'.replace(/,/g, ''));  
+  
+            function updateTotalPrice() {  
+                const quantity = parseInt(quantityInput.value, 10);  
+                const totalPrice = price * quantity;  
+                totalPriceInput.value = 'Rp' + totalPrice.toLocaleString('id-ID');  
+            }  
+  
+            quantityInput.addEventListener('input', updateTotalPrice);  
+            updateTotalPrice();  
+        });  
+    </script>  
+</body>  
+</html>  

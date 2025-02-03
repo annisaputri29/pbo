@@ -1,0 +1,66 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Update Menu Item</title>  
+    <!-- Bootstrap CSS -->  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">  
+</head>  
+<body>  
+    <header>  
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">  
+            <a class="navbar-brand" href="/">Home</a>  
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+                <span class="navbar-toggler-icon"></span>  
+            </button>  
+            <div class="collapse navbar-collapse" id="navbarNav">  
+                <ul class="navbar-nav ml-auto">  
+                    <li class="nav-item">  
+                        <a class="nav-link" href="/orders">Track Order</a>  
+                    </li>  
+                    <li class="nav-item">  
+                        <a class="nav-link" href="/auth/logout">Logout</a>  
+                    </li>  
+                </ul>  
+            </div>  
+        </nav>  
+        <div class="container mt-4">  
+            <h1 class="display-4">Update Menu Item</h1>  
+        </div>  
+    </header>  
+    <main>  
+        <div class="container mt-5">  
+            <form action="/menu/update/{{ menu.item_id }}" method="POST">  
+                <div class="form-group">  
+                    <label for="foodName">Food Name</label>  
+                    <input type="text" class="form-control" id="foodName" name="foodName" value="{{ menu.name }}" required>  
+                </div>  
+                <div class="form-group">  
+                    <label for="price">Price</label>  
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ menu.price }}" required>  
+                </div>  
+                <div class="form-group">  
+                    <label for="description">Description</label>  
+                    <textarea class="form-control" id="description" name="description" rows="3" required>{{ menu.description }}</textarea>  
+                </div>  
+                <div class="form-group">  
+                    <label for="imageLink">Image Link</label>  
+                    <input type="text" class="form-control" id="imageLink" name="imageLink" value="{{ menu.image }}" required>  
+                </div>  
+                <div class="form-group">  
+                    <label for="stock">Stock</label>  
+                    <input type="number" class="form-control" id="stock" name="stock" value="{{ menu.stock }}" required>  
+                </div>  
+                <button type="submit" class="btn btn-primary mb-3">Update Menu Item</button>  
+            </form>  
+        </div>  
+    </main>  
+    <!-- Bootstrap JS and dependencies -->  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+    <script src="script.js"></script>  
+</body>  
+</html>  

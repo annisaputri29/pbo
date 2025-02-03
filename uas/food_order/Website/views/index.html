@@ -1,0 +1,93 @@
+<!DOCTYPE html>    
+<html lang="en">    
+<head>    
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Menu</title>    
+    <!-- Bootstrap CSS -->    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">    
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">    
+</head>    
+<body>    
+    <header>    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">    
+            <a class="navbar-brand" href="/">Home</a>    
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">    
+                <span class="navbar-toggler-icon"></span>    
+            </button>    
+            <div class="collapse navbar-collapse" id="navbarNav">    
+                <ul class="navbar-nav ml-auto">    
+                    <li class="nav-item">    
+                        <a class="nav-link" href="/orders">Track Order</a>    
+                    </li>    
+                    <li class="nav-item">    
+                        <a class="nav-link" href="/auth/logout">Logout</a>    
+                    </li>    
+                </ul>    
+            </div>    
+        </nav>    
+        <div class="container mt-4">    
+            <h1 class="display-4">Hello, {{ current_user.full_name }}!</h1>    
+        </div>    
+    </header>    
+    <main>    
+        {% if current_user.role == 'user' %}  
+        <section class="container mt-5">    
+            <div class="row">    
+                {% for menu in menu_with_ratings %}    
+                <div class="col-md-4 mb-4">    
+                    <div class="card h-100">    
+                        <img src="{{ menu.image }}" class="card-img-top" alt="{{ menu.name }}">    
+                        <div class="card-body">    
+                            <h5 class="card-title">{{ menu.name }}</h5>    
+                            <p class="card-text text-muted">Rp{{ menu.price }}</p>    
+                            <p class="card-text">{{ menu.description }}</p>    
+                            <p class="card-text">Stock: {{ menu.stock }}</p>    
+                            <div class="mb-3 d-flex flex-row">
+                                <span>★</span> 
+                                <p class="mx-1">{{ menu_with_ratings[menu] }}</p>
+                            </div>
+                            <a href="/order/menu/{{ menu.item_id }}" class="btn btn-primary">Order Now</a>    
+                        </div>    
+                    </div>    
+                </div>    
+                {% endfor %}    
+            </div>    
+        </section>    
+        {% elif current_user.role == 'admin' %}  
+        <section class="container mt-5">  
+            <table class="table table-striped">  
+                <thead>  
+                    <tr>  
+                        <th>Menu Name</th>  
+                        <th>Price</th>  
+                        <th>Description</th>  
+                        <th>Stock</th>  
+                        <th></th>  
+                        <th></th>  
+                    </tr>  
+                </thead>  
+                <tbody>  
+                    {% for menu in menu_with_ratings %}  
+                    <tr>  
+                        <td>{{ menu.name }}</td>  
+                        <td>Rp{{ menu.price }}</td>  
+                        <td>{{ menu.description }}</td>  
+                        <td>{{ menu.stock }}</td>  
+                        <td><a href="/menu/update/{{ menu.item_id }}" class="btn btn-warning">Update</a></td>  
+                        <td><a href="/menu/delete/{{ menu.item_id }}" class="btn btn-danger">Delete</a></td>  
+                    </tr>  
+                    {% endfor %}  
+                </tbody>  
+            </table>  
+            <a href="/menu/add" class="btn btn-primary mb-3">Add New Menu Item</a>  
+        </section>  
+        {% endif %}  
+    </main>    
+    <!-- Bootstrap JS and dependencies -->    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
+    <script src="script.js"></script>    
+</body>    
+</html>  

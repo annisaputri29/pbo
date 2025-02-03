@@ -1,0 +1,114 @@
+<!DOCTYPE html>    
+<html lang="en">    
+<head>    
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Track Order</title>    
+    <!-- Bootstrap CSS -->    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">    
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">    
+    <style>    
+        .status-pending {    
+            background-color: #fff3cd; /* Light yellow */    
+            color: #856404; /* Darker yellow text */    
+        }    
+        .status-done {    
+            background-color: #d4edda; /* Light green */    
+            color: #155724; /* Darker green text */    
+        }    
+    </style>    
+</head>    
+<body>    
+    <header>    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">    
+            <a class="navbar-brand" href="/">Home</a>    
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">    
+                <span class="navbar-toggler-icon"></span>    
+            </button>    
+            <div class="collapse navbar-collapse" id="navbarNav">    
+                <ul class="navbar-nav ml-auto">    
+                    <li class="nav-item">    
+                        <a class="nav-link" href="/orders">Track Order</a>    
+                    </li>    
+                    <li class="nav-item">    
+                        <a class="nav-link" href="/auth/logout">Logout</a>    
+                    </li>    
+                </ul>    
+            </div>    
+        </nav>    
+    </header>    
+    <main class="container mt-5">    
+        <h1 class="display-4">Track Your Orders</h1>    
+        {% if current_user.role == 'user' %}   
+        <div class="row">    
+            <div class="col-md-12">    
+                {% for order in order_menu_items %}    
+                <div class="card mb-4">    
+                    <div class="card-body">    
+                        <div class="d-flex justify-content-between align-items-center">  
+                            <div>  
+                                <h4 class="card-title">    
+                                    {{ order_menu_items[order][1] }}    
+                                </h4>   
+                                <p> Rp{{ order_menu_items[order][2] }} x {{ order.qty }} = Rp{{ order.total }} </p>  
+                                <p class="card-text"><strong>Delivery Address:</strong> {{ order.address }}</p>    
+                                <p class="card-text text-muted">{{ order.date }}</p>    
+                            </div>  
+                            <div class="d-flex flex-row">
+                                <strong class="badge {{ 'status-pending' if order.status == 'Pending' else 'status-done' }} p-2">    
+                                    {{ order.status }}    
+                            </strong>     
+                                {% if order.status == 'Done' %}
+                                <a class="px-3" href="/menu/{{ order_menu_items[order][0] }}/rating">Give rating</a>
+                                {% endif %}
+                            </div>
+                        </div>  
+                    </div>    
+                </div>    
+                {% endfor %}    
+            </div>    
+        </div>  
+        {% elif current_user.role == 'admin' %}  
+            <table class="table table-striped">  
+                <thead>  
+                    <tr>  
+                        <th>Timestamp</th>  
+                        <th>Order ID</th>  
+                        <th>User ID</th>  
+                        <th>Menu ID</th>  
+                        <th>Quantity</th>  
+                        <th>Total</th>  
+                        <th>Status</th>
+                        <th></th>  
+                    </tr>  
+                </thead>  
+                <tbody>  
+                    {% for order in all_orders %}  
+                    <tr>  
+                        <td>{{ order.date }}</td>  
+                        <td>{{ order.order_id }}</td>  
+                        <td>{{ order.customer_id }}</td>  
+                        <td>{{ order.menu_id }}</td>  
+                        <td>{{ order.qty }}</td>  
+                        <td>Rp{{ order.total }}</td>  
+                        <td>{{ order.status }}</td>
+                        <td>  
+                            {% if order.status == 'Pending' %}
+                            <form action="/order/{{ order.order_id }}/update" method="POST"> 
+                                <button type="submit" class="btn btn-primary">Complete Order</button>  
+                            </form>  
+                            {% endif %}
+                        </td>  
+                    </tr>  
+                    {% endfor %}  
+                </tbody>  
+            </table>  
+            
+        {% endif %}     
+    </main>    
+    <!-- Bootstrap JS and dependencies -->    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
+</body>    
+</html>  

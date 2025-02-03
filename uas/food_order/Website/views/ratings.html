@@ -1,0 +1,76 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Rate Menu Item</title>  
+    <!-- Bootstrap CSS -->  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  
+    <style>  
+        .rating {  
+            display: flex;  
+            flex-direction: row-reverse;  
+            justify-content: flex-end;  
+            margin-bottom: 20px;  
+        }  
+        .rating input {  
+            display: none;  
+        }  
+        .rating label {  
+            cursor: pointer;  
+            font-size: 30px;  
+            color: #ddd;  
+        }  
+        .rating input:checked ~ label {  
+            color: #f39c12;  
+        }  
+        .rating label:hover,  
+        .rating label:hover ~ label {  
+            color: #f39c12;  
+        }  
+
+        .box {
+            margin-top: 200px;
+        }
+    </style>  
+</head>  
+<body>  
+    <div class="container box">  
+        <div class="row">  
+            <div class="col-md-6">  
+                <img src="{{ menu.image }}" alt="{{ menu.name }}" class="img-fluid">  
+            </div>  
+            <div class="col-md-6">  
+                <h1>{{ menu.name }}</h1>  
+                <p><strong>Description:</strong> {{ menu.description }}</p>  
+                <p><strong>Price:</strong> Rp{{ menu.price }}</p>  
+                  
+                <h3>Rate this Menu Item</h3>  
+                <form action="/menu/{{ menu.item_id }}/rating" method="POST">  
+                    <div class="rating">  
+                        <input type="radio" id="star5" name="rating" value="5" />  
+                        <label for="star5" title="5 stars">★</label>  
+                        <input type="radio" id="star4" name="rating" value="4" />  
+                        <label for="star4" title="4 stars">★</label>  
+                        <input type="radio" id="star3" name="rating" value="3" />  
+                        <label for="star3" title="3 stars">★</label>  
+                        <input type="radio" id="star2" name="rating" value="2" />  
+                        <label for="star2" title="2 stars">★</label>  
+                        <input type="radio" id="star1" name="rating" value="1" />  
+                        <label for="star1" title="1 star">★</label>  
+                    </div>  
+                    <div class="form-group">  
+                        <label for="comment">Comment:</label>  
+                        <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Leave your comment here..."></textarea>  
+                    </div>  
+                    <button type="submit" class="btn btn-primary">Submit Rating</button>  
+                </form>  
+            </div>  
+        </div>  
+    </div>  
+    <!-- Bootstrap JS and dependencies -->  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+</body>  
+</html>  
